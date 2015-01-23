@@ -1,12 +1,9 @@
 require "rails_helper"
+require "support/attributes"
 
 describe "Viewing an individual movie" do
   it "shows the movie's details" do
-    movie = Movie.create title: "Winter Sleep",
-                         rating: "PG",
-                         total_gross: 318412101.00,
-                         description: "If only Bergman were Turkish",
-                         released_on: "2014-06-13"
+    movie = Movie.create movie_attributes(total_gross: 318412101.00)
 
     visit movie_url(movie)
 
