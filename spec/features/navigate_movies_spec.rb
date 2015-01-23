@@ -2,8 +2,9 @@ require "rails_helper"
 require "support/attributes"
 
 describe "Navigating movies" do
+  let!(:movie) { movie = Movie.create movie_attributes }
+
   it "allows navigation from the detail page to the listing page" do
-    movie = Movie.create movie_attributes
     visit movie_url(movie)
 
     click_link "All Movies"
@@ -12,7 +13,6 @@ describe "Navigating movies" do
   end
 
   it "allows navigation from the listing page to the detail page" do
-    movie = Movie.create movie_attributes
     visit movies_url
 
     click_link movie.title
