@@ -10,4 +10,8 @@ class MoviesController < ApplicationController
   def edit
     @movie = Movie.find params[:id]
   end
+
+  def update
+    redirect_to movie_path
+  end
 end
