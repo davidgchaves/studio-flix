@@ -27,4 +27,13 @@ describe "Navigating movies" do
 
     expect(current_path).to eq edit_movie_path(movie)
   end
+
+  it "allows navigation from the edit page to the detail page" do
+    visit movie_url(movie)
+    click_link "Edit"
+
+    click_button "Update Movie"
+
+    expect(current_path).to eq movie_path(movie)
+  end
 end
