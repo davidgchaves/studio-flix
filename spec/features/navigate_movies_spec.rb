@@ -36,4 +36,12 @@ describe "Navigating movies" do
 
     expect(current_path).to eq movie_path(movie)
   end
+
+  it "allows navigation from the listing page to the create page" do
+    visit movies_url
+
+    click_link "Add New Movie"
+
+    expect(current_path).to eq new_movie_path
+  end
 end
