@@ -7,6 +7,10 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
+  def create
+    redirect_to movie_path(Movie.create)
+  end
+
   def show
     @movie = Movie.find params[:id]
   end
