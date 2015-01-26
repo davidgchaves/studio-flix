@@ -8,7 +8,8 @@ class MoviesController < ApplicationController
   end
 
   def create
-    redirect_to movie_path(Movie.create)
+    @movie = Movie.create movie_params
+    redirect_to @movie
   end
 
   def show
