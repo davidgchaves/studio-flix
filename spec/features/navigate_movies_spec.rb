@@ -58,4 +58,12 @@ describe "Navigating movies" do
 
     expect(current_path).to eq movie_path(Movie.last)
   end
+
+  it "allows navigation from the details page to the listing page destroying a movie" do
+    visit movie_url(movie)
+
+    click_link "Delete"
+
+    expect(current_path).to eq movies_path
+  end
 end
