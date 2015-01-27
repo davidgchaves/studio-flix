@@ -2,9 +2,9 @@ require "rails_helper"
 require "support/attributes"
 
 describe "Viewing an individual movie" do
-  it "shows the movie's details" do
-    movie = Movie.create movie_attributes
+  let!(:movie) { Movie.create movie_attributes }
 
+  it "shows the movie's details" do
     visit movie_url(movie)
 
     expect(page).to have_text movie.title
@@ -27,5 +27,13 @@ describe "Viewing an individual movie" do
     visit movie_url(movie)
 
     expect(page).to have_text "Flop!"
+  end
+
+  it "allows navigation to the listing page" do
+    visit movie_url(movie)
+
+    click_link "All Movies"
+
+    expect(current_path).to eq movies_path
   end
 end
