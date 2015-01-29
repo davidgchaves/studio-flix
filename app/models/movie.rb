@@ -10,4 +10,8 @@ class Movie < ActiveRecord::Base
   def self.hits
     where("total_gross >= ?", 300000000).order total_gross: :desc
   end
+
+  def self.flops
+    where("total_gross < ?", 50000000).order total_gross: :asc
+  end
 end
