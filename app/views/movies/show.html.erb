@@ -14,6 +14,18 @@
 
   <h3>Total Gross</h3>
   <p><%= format_total_gross @movie %></p>
+
+  <h3>Cast</h3>
+  <p><%= @movie.cast %></p>
+
+  <h3>Director</h3>
+  <p><%= @movie.director %></p>
+
+  <h3>Duration</h3>
+  <p><%= @movie.duration %></p>
+
+  <h3>Image</h3>
+  <%= image_tag(@movie.image_file_name) %>
 </article>
 
 <%= link_to "All Movies", movies_path %>
