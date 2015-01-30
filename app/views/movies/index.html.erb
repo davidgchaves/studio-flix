@@ -5,7 +5,7 @@
 <% @movies.each do |movie| %>
   <article>
     <header>
-      <%= image_tag movie.image_file_name %>
+      <%= image_for movie %>
       <h2><%= link_to movie.title, movie %></h2>
       <h3>A <%= movie.director %> movie</h3>
       <h3><%= movie.cast %></h3>
