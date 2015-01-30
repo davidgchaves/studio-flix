@@ -79,4 +79,26 @@ describe "A movie" do
 
     expect(Movie.flops).to eq [flop_movie3, flop_movie2, flop_movie1]
   end
+
+  it "is recently added when is one of the last 3 created movies" do
+    3.times { Movie.create movie_attributes(created_at: 1.hour.ago) }
+    recently_added_movie = Movie.create movie_attributes(created_at: Time.now)
+
+    expect(Movie.recently_added).to include recently_added_movie
+  end
+
+  it "is not recently added when is not one of the last 3 created movies" do
+    movie = Movie.create movie_attributes(created_at: 1.hour.ago)
+    3.times { Movie.create movie_attributes(created_at: Time.now) }
+
+    expect(Movie.recently_added).not_to include movie
+  end
+
+  it "returns recently added movies ordered with the most recently added movie first" do
+    movie1 = Movie.create movie_attributes(created_at: 3.hours.ago)
+    movie2 = Movie.create movie_attributes(created_at: 2.hours.ago)
+    movie3 = Movie.create movie_attributes(created_at: 1.hours.ago)
+
+    expect(Movie.recently_added).to eq [movie3, movie2, movie1]
+  end
 end
