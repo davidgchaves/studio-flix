@@ -26,9 +26,9 @@ describe "Viewing an individual movie" do
   end
 
   it "shows 'Flop!' if the total gross is less than $50M" do
-    movie = Movie.create movie_attributes(total_gross: 40000000.00)
+    flop_movie = Movie.create movie_attributes(total_gross: 40000000.00)
 
-    visit movie_url(movie)
+    visit movie_url(flop_movie)
 
     expect(page).to have_text "Flop!"
   end
