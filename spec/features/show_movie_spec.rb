@@ -33,6 +33,22 @@ describe "Viewing an individual movie" do
     expect(page).to have_text "Flop!"
   end
 
+  it "shows the movie's poster when there's a poster associated to the movie" do
+    movie_with_poster = Movie.create movie_attributes(image_file_name: "wintersleep.jpg")
+
+    visit movie_url(movie_with_poster)
+
+    expect(page).to have_selector "img[src$='#{movie_with_poster.image_file_name}']"
+  end
+
+  it "show a default poster when there's no poster associated to the movie" do
+    movie_with_no_poster = Movie.create movie_attributes(image_file_name: "")
+
+    visit movie_url(movie_with_no_poster)
+
+    expect(page).to have_selector "img[src$='placeholder.png']"
+  end
+
   it "allows navigation to the listing page" do
     visit movie_url(movie)
 
