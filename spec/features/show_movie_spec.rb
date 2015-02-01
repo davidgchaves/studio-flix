@@ -48,12 +48,4 @@ describe "Viewing an individual movie" do
 
     expect(page).to have_selector "img[src$='placeholder.png']"
   end
-
-  it "allows navigation to the listing page" do
-    visit movie_url(movie)
-
-    click_link "All Movies"
-
-    expect(current_path).to eq movies_path
-  end
 end
