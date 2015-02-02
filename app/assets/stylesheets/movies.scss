@@ -1,3 +1,16 @@
 // Place all the styles related to the movies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+article.movie {
+  img {
+    display: block;
+    max-width: 400px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    float: left;
+    margin: 0 15px;
+    border: 3xp solid #F0F0F0;
+  }
+}
