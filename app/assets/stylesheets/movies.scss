@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "colors";
+
 article.movie {
   img {
     display: block;
@@ -11,6 +13,6 @@ article.movie {
     height: auto;
     float: left;
     margin: 0 15px;
-    border: 3xp solid #F0F0F0;
+    border: 3xp solid $secondary-color;
   }
 }
