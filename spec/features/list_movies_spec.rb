@@ -34,13 +34,13 @@ describe "Viewing the list of movies" do
   before { visit movies_url }
 
   it "shows the released movies" do
-    expect(page).to have_text "2 Movies"
+    expect(page).to have_text "Flix"
     expect(page).to have_text movie1.title
     expect(page).to have_text movie2.title
 
     expect(page).to have_text movie1.rating
     expect(page).to have_text movie1.description[0..9]
-    expect(page).to have_text movie1.released_on
+    expect(page).to have_text movie1.released_on.year
     expect(page).to have_text "$318,412,101.00"
     expect(page).to have_text movie1.cast
     expect(page).to have_text movie1.director
