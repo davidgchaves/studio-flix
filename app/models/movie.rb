@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-  validates :title, :released_on, presence: true
+  validates :title, :released_on, :duration, presence: true
   validates :description, length: { minimum: 25 }
 
   def flop?
