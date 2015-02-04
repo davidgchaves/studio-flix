@@ -13,5 +13,7 @@
  *= require_self
  *= require normalize
  *= require layout
+ *= require elements
  *= require movies
+ *= require buttons
  */
