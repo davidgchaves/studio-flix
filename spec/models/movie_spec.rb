@@ -182,4 +182,26 @@ describe "A movie" do
       expect(movie.errors[:image_file_name].any?).to eq false
     end
   end
+
+  it "rejects any rating that is not in the approved list" do
+    wrong_ratings = %w[R-13 R-16 R-18 R-21]
+    wrong_ratings.each do |wrong_rating|
+      movie = Movie.new rating: wrong_rating
+
+      movie.valid?
+
+      expect(movie.errors[:rating].any?).to eq true
+    end
+  end
+
+  it "accepts any rating that is in an approved list" do
+    valid_ratings = %w[G PG PG-13 R NC-17]
+    valid_ratings.each do |valid_rating|
+      movie = Movie.new rating: valid_rating
+
+      movie.valid?
+
+      expect(movie.errors[:rating].any?).to eq false
+    end
+  end
 end
