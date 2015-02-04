@@ -1,5 +1,6 @@
 class Movie < ActiveRecord::Base
   validates :title, presence: true
+  validates :description, length: { minimum: 25 }
 
   def flop?
     total_gross.blank? || total_gross < 50000000.00
