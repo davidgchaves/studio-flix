@@ -125,4 +125,12 @@ describe "A movie" do
 
     expect(movie.errors[:released_on].any?).to eq true
   end
+
+  it "requires a duration" do
+    movie = Movie.new duration: ""
+
+    movie.valid?
+
+    expect(movie.errors[:duration].any?).to eq true
+  end
 end
