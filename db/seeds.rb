@@ -3,39 +3,6 @@
 
 Movie.create! [
   {
-    title: "Winter Sleep",
-    rating: "PG",
-    total_gross: 318412101.00,
-    description: "If only Bergman were Turkish",
-    released_on: 6.months.ago,
-    cast: "Haluk Bilginer, Melisa Sözen, Demet Akba",
-    director: "Nuri Bilge Ceylan",
-    duration: "196 min",
-    image_file_name: "wintersleep.jpg"
-  },
-  {
-    title: "Leviathan",
-    rating: "R",
-    total_gross: 134218018.00,
-    description: "Nowadays Tarkovsky in a Russian coastal town",
-    released_on: 4.months.ago,
-    cast: "Aleksey Serebryakov, Elena Lyadova, Roman Madyanov",
-    director: " Andrey Zvyagintsev",
-    duration: "140 min",
-    image_file_name: "leviathan.jpg"
-  },
-  {
-    title: "The Salt of the Earth",
-    rating: "PG-13",
-    total_gross: 403706375.00,
-    description: "Very compelling doc about life, love, loss, despair and redemption",
-    released_on: 1.month.from_now,
-    cast: "Sebastião Salgado, Wim Wenders, Juliano Ribeiro Salgado",
-    director: "Wim Wender and Juliano Ribeiro Salgado",
-    duration: "110 min",
-    image_file_name: "saltearth.jpg"
-  },
-  {
     title: 'Iron Man',
     description:
     %{
@@ -104,7 +71,7 @@ Movie.create! [
     description:
     %{
       Patience Philips seems destined to spend her life apologizing for taking up space.
-      Despite her artistic ability&mdash;she has a more than respectable career as a graphic
+      Despite her artistic ability, she has a more than respectable career as a graphic
       designer.
     }.squish,
     image_file_name: "catwoman.jpg",
