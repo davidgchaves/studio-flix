@@ -117,4 +117,12 @@ describe "A movie" do
 
     expect(movie.errors[:description].any?).to eq true
   end
+
+  it "requires a released on date" do
+    movie = Movie.new released_on: ""
+
+    movie.valid?
+
+    expect(movie.errors[:released_on].any?).to eq true
+  end
 end
