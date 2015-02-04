@@ -2,6 +2,9 @@ class Movie < ActiveRecord::Base
   validates :title, :released_on, :duration, presence: true
   validates :description, length: { minimum: 25 }
   validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
+  validates :image_file_name, allow_blank: true, format: {
+    with: /\w+\.(jpg|png|gif)\z/i,
+    message: "must reference a GIF, JPG or PNG image" }
 
   def flop?
     total_gross.blank? || total_gross < 50000000.00
