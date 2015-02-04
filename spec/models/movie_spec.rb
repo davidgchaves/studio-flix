@@ -152,4 +152,34 @@ describe "A movie" do
       expect(movie.errors[:total_gross].any?).to eq false
     end
   end
+
+  it "rejects improperly formatted image file names" do
+    invalid_file_names = %w[movie .jpg .png .gif movie.pdf movie.doc]
+    invalid_file_names.each do |invalid_file_name|
+      movie = Movie.new image_file_name: invalid_file_name
+
+      movie.valid?
+
+      expect(movie.errors[:image_file_name].any?).to eq true
+    end
+  end
+
+  it "accepts a blank image file name" do
+    movie = Movie.new image_file_name: ""
+
+    movie.valid?
+
+    expect(movie.errors[:image_file_name].any?).to eq false
+  end
+
+  it "accepts properly formatted image file names" do
+    valid_file_names = %w[e.png movie.png movie.jpg movie.gif MOVIE.GIF]
+    valid_file_names.each do |valid_file_name|
+      movie = Movie.new image_file_name: valid_file_name
+
+      movie.valid?
+
+      expect(movie.errors[:image_file_name].any?).to eq false
+    end
+  end
 end
