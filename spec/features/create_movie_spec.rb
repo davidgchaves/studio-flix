@@ -15,7 +15,7 @@ describe "Creating a new movie" do
     expect(find_field("Description").value).to eq ""
   end
 
-  context "when done" do
+  context "when on success" do
     before do
       fill_in "Title", with: "New Movie Title"
       fill_in "Description", with: "Superheroes saving the world from villains"
@@ -36,6 +36,28 @@ describe "Creating a new movie" do
 
     it "shows the new movie's details" do
       expect(page).to have_text "New Movie Title"
+    end
+  end
+
+  context "on failure" do
+    before do
+      fill_in "Title", with: ""
+      fill_in "Description", with: "Superheroes saving the world from villains"
+
+      click_button "Create Movie"
+    end
+
+    it "renders again the new template" do
+      expect(current_path).to eq movies_path
+      expect(page).to have_text "Create a New Movie"
+    end
+
+    it "shows info about what was wrong" do
+      expect(page).to have_text "correct the following"
+    end
+
+    it "preserves the movie info previously entered" do
+      expect(page).to have_text "Superheroes saving the world from villains"
     end
   end
 end
