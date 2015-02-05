@@ -204,4 +204,10 @@ describe "A movie" do
       expect(movie.errors[:rating].any?).to eq false
     end
   end
+
+  it "is valid with example attributes" do
+    movie = Movie.new movie_attributes
+
+    expect(movie.valid?).to eq true
+  end
 end
