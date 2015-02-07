@@ -37,6 +37,10 @@ describe "Creating a new movie" do
     it "shows the new movie's details" do
       expect(page).to have_text "New Movie Title"
     end
+
+    it "flashes a 'movie successfully created' message" do
+      expect(page).to have_text "Movie successfully created!"
+    end
   end
 
   context "on failure" do
