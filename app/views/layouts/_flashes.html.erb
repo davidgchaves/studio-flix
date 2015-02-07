@@ -1,3 +1,5 @@
-<p class="flash notice" >
-  <%= flash[:notice] %>
-</p>
+<% if flash[:notice] %>
+  <p class="flash notice" >
+    <%= flash[:notice] %>
+  </p>
+<% end %>
