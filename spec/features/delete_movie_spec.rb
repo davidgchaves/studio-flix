@@ -17,4 +17,8 @@ describe "Deleting a movie" do
     expect(page).not_to have_text movie.title
     expect(page).not_to have_text movie.description
   end
+
+  it "flashes a 'movie successfully deleted' message" do
+    expect(page).to have_text "Movie successfully deleted!"
+  end
 end
