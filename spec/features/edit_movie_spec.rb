@@ -30,6 +30,10 @@ describe "Editing a movie" do
     it "shows the movie's updated details" do
       expect(page).to have_text "Updated Movie Title"
     end
+
+    it "flashes a 'movie successfully updated' message" do
+      expect(page).to have_text "Movie successfully updated!"
+    end
   end
 
   context "on failure" do
