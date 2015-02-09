@@ -47,5 +47,11 @@ describe "A review" do
       expect(valid_review.errors[:stars].any?).to eq false
     end
   end
+
+  it "is valid with example attributes" do
+    review = Review.new review_attributes
+
+    expect(review.valid?).to eq true
+  end
 end
 
