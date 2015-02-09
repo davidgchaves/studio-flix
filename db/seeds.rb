@@ -98,3 +98,16 @@ Movie.create! [
     total_gross: 387_623_910
   }
 ]
+
+iron_man = Movie.find_by title: 'Iron Man'
+iron_man.reviews.create! name: "Roger Ebert", stars: 3, location: "Urbana, IL",
+                         comment: "I laughed, I cried, I spilled my popcorn!"
+iron_man.reviews.create! name: "Gene Siskel", stars: 5, location: "Chicago, IL",
+                         comment: "I'm a better reviewer than he is."
+iron_man.reviews.create! name: "Peter Travers", stars: 4, location: "Portland, OR",
+                         comment: "It's been years since a movie superhero was this fierce and this funny."
+
+superman = Movie.find_by title: 'Superman'
+superman.reviews.create! name: "Elvis Mitchell", stars: 5, location: "Detroit, MI",
+                         comment: "It's a bird, it's a plane, it's a blockbuster!"
+
