@@ -2,12 +2,13 @@
   <h1>Reviews for <%= link_to @movie.title, @movie%></h1>
 </header>
 
-<ol>
+<ol id="reviews">
   <% @reviews.each do |review| %>
     <li>
-      <p><%= pluralize review.stars, "star" %> by <%= review.name %></p>
-      <p><%= review.comment %></p>
-      <p><%= time_ago_in_words review.created_at %></p>
+      <span class="review"><%= pluralize review.stars, "star" %></span>
+      <span class="user"><%= review.name %></span>
+      <span class="date"><%= time_ago_in_words review.created_at %> ago</span>
+      <p>&quot;<%= review.comment %>&quot;</p>
     </li>
   <% end %>
 </ol>
