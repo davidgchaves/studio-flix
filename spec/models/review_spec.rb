@@ -9,5 +9,13 @@ describe "A review" do
 
     expect(review.movie).to eq movie
   end
+
+  it "requires a name" do
+    invalid_review = Review.new name: ""
+
+    invalid_review.valid?
+
+    expect(invalid_review.errors[:name].any?).to eq true
+  end
 end
 
