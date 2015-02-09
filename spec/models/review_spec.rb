@@ -17,5 +17,13 @@ describe "A review" do
 
     expect(invalid_review.errors[:name].any?).to eq true
   end
+
+  it "requires a comment with at least 4 characters" do
+    invalid_review = Review.new comment: "X" * 3
+
+    invalid_review.valid?
+
+    expect(invalid_review.errors[:comment].any?).to eq true
+  end
 end
 
