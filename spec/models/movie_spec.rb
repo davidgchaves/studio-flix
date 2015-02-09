@@ -12,6 +12,14 @@ describe "A movie" do
     expect(movie.reviews).to include review2
   end
 
+  it "deletes associated reviews" do
+    movie = Movie.create movie_attributes
+
+    movie.reviews.create review_attributes
+
+    expect{movie.destroy}.to change(Review, :count).by -1
+  end
+
   it "is a flop if the total gross is less than $50M" do
     flop_movie = Movie.new total_gross: 40000000.00
 
