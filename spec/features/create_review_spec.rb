@@ -41,5 +41,9 @@ describe "Creating a new review for a movie" do
     it "shows the new review's details" do
       expect(page).to have_text "Roger Ebert"
     end
+
+    it "flashes a 'Thanks for your review!' message" do
+      expect(page).to have_text "Thanks for your review!"
+    end
   end
 end
