@@ -48,4 +48,13 @@ describe "Viewing an individual movie" do
 
     expect(page).to have_selector "img[src$='placeholder.png']"
   end
+
+  it "allows navigation to its reviews" do
+    movie = Movie.create movie_attributes
+    visit movie_url(movie)
+
+    click_link "Reviews"
+
+    expect(current_path).to eq movie_reviews_path(movie)
+  end
 end
