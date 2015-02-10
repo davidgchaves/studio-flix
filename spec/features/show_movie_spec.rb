@@ -51,9 +51,11 @@ describe "Viewing an individual movie" do
 
   it "allows navigation to its reviews" do
     movie = Movie.create movie_attributes
+    review1 = movie.reviews.create review_attributes
+    review2 = movie.reviews.create review_attributes
     visit movie_url(movie)
 
-    click_link "Reviews"
+    click_link "2 reviews"
 
     expect(current_path).to eq movie_reviews_path(movie)
   end
