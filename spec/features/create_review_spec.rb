@@ -25,15 +25,21 @@ describe "Creating a new review for a movie" do
   end
 
   context "on success" do
-    it "redirects to the listing reviews page for the movie" do
+    before do
       fill_in "Name", with: "Roger Ebert"
       select 3, from: "Stars"
       fill_in "Comment", with: "I laughed, I cried, I spilled my popcorn!"
       fill_in "Location", with: "Chicago, IL"
 
       click_button "Post Review"
+    end
 
+    it "redirects to the listing reviews page for the movie" do
       expect(current_path).to eq movie_reviews_path(movie)
+    end
+
+    it "shows the new review's details" do
+      expect(page).to have_text "Roger Ebert"
     end
   end
 end
