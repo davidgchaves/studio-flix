@@ -5,26 +5,26 @@
 <%= form_for [@movie, @review] do |f| %>
   <fieldset>
     <ol>
-      <li>
+      <li class="required">
         <%= f.label :name %>
-        <%= f.text_field :name %>
+        <%= f.text_field :name, size: 40, autofocus: true %>
       </li>
-      <li>
+      <li class="required stars">
         <%= f.label :stars %>
         <%= f.select :stars, Review::STARS, prompt: "Pick one" %>
       </li>
-      <li>
+      <li class="required">
         <%= f.label :comment %>
-        <%= f.text_field :comment %>
+        <%= f.text_area :comment, cols: 80, placeholder: "What did you think about #{@movie.title}?" %>
       </li>
-      <li>
+      <li class="required">
         <%= f.label :location %>
-        <%= f.text_field :location %>
+        <%= f.text_field :location, size: 40, placeholder: "Example: Portland, OR" %>
       </li>
     </ol>
     <p>
       <%= f.submit "Post Review" %>
-      <%= link_to "Cancel", @movie %>
+      <%= link_to "Cancel", @movie, class:"button" %>
     </p>
   </fieldset>
 <% end %>
