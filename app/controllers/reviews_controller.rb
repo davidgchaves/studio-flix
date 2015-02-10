@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
   def create
     @movie = Movie.find params[:movie_id]
     @review = @movie.reviews.create review_params
-    redirect_to movie_reviews_path(@movie)
+    redirect_to movie_reviews_path(@movie), notice: "Thanks for your review!"
   end
 
   private
