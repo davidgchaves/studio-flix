@@ -19,7 +19,7 @@ describe "Creating a new review for a movie" do
     expect(page).to have_field "Name"
     expect(page).to have_field "Comment"
     expect(page).to have_field "Location"
-    expect(page).to have_select "Stars"
+    expect(page).to have_field "review[stars]"
     expect(page).to have_button "Post Review"
     expect(page).to have_link "Cancel"
   end
@@ -27,7 +27,7 @@ describe "Creating a new review for a movie" do
   context "on success" do
     before do
       fill_in "Name", with: "Roger Ebert"
-      select 3, from: "Stars"
+      choose "review_stars_3"
       fill_in "Comment", with: "I laughed, I cried, I spilled my popcorn!"
       fill_in "Location", with: "Chicago, IL"
 
