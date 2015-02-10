@@ -58,5 +58,9 @@ describe "Creating a new review for a movie" do
       expect(current_path).to eq movie_reviews_path(movie)
       expect(page).to have_button "Post Review"
     end
+
+    it "shows what was wrong last time" do
+      expect(page).to have_text "correct the following"
+    end
   end
 end
