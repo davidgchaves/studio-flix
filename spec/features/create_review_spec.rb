@@ -46,4 +46,17 @@ describe "Creating a new review for a movie" do
       expect(page).to have_text "Thanks for your review!"
     end
   end
+
+  context "on failure" do
+    before do
+      fill_in "Name", with: ""
+
+      click_button "Post Review"
+    end
+
+    it "renders again the new template" do
+      expect(current_path).to eq movie_reviews_path(movie)
+      expect(page).to have_button "Post Review"
+    end
+  end
 end
