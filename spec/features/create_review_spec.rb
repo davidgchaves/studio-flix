@@ -23,4 +23,17 @@ describe "Creating a new review for a movie" do
     expect(page).to have_button "Post Review"
     expect(page).to have_link "Cancel"
   end
+
+  context "on success" do
+    it "redirects to the listing reviews page for the movie" do
+      fill_in "Name", with: "Roger Ebert"
+      select 3, from: "Stars"
+      fill_in "Comment", with: "I laughed, I cried, I spilled my popcorn!"
+      fill_in "Location", with: "Chicago, IL"
+
+      click_button "Post Review"
+
+      expect(current_path).to eq movie_reviews_path(movie)
+    end
+  end
 end
