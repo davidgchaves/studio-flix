@@ -49,6 +49,25 @@ describe "Viewing an individual movie" do
     expect(page).to have_selector "img[src$='placeholder.png']"
   end
 
+  it "shows the average number of review stars when there's at least a review" do
+    movie = Movie.create movie_attributes
+    movie.reviews.create review_attributes(stars: 1)
+    movie.reviews.create review_attributes(stars: 4)
+    movie.reviews.create review_attributes(stars: 2)
+
+    visit movie_url(movie)
+
+    expect(page).to have_text "2.3 stars"
+  end
+
+  it "shows a 'No Reviews' message when there's no reviews" do
+    movie = Movie.create movie_attributes
+
+    visit movie_url(movie)
+
+    expect(page).to have_text "No Reviews"
+  end
+
   it "allows navigation to its reviews" do
     movie = Movie.create movie_attributes
     review1 = movie.reviews.create review_attributes
