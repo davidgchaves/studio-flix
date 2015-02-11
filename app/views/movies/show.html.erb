@@ -25,10 +25,12 @@
     <section id="reviews">
       <h3>Reviews</h3>
       <%= render 'layouts/show_reviews', object: @movie.recent_reviews %>
+      <p>
+        Read all <%= link_to pluralize(@movie.reviews.size, "review"),
+                             movie_reviews_path(@movie) %>
+      </p>
     </section>
   <% end %>
-
-  <%= link_to pluralize(@movie.reviews.size, "review"), movie_reviews_path(@movie), class: "button" %>
 
   <footer>
     <%= link_to "Write Review", new_movie_review_path(@movie), class: "button ok review" %>
