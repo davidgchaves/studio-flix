@@ -12,7 +12,7 @@ class Movie < ActiveRecord::Base
     message: "must reference a GIF, JPG or PNG image" }
 
   def flop?
-    total_gross.blank? || total_gross < 50000000.00
+    !cult_classic? && (total_gross.blank? || total_gross < 50000000.00)
   end
 
   def cult_classic?
