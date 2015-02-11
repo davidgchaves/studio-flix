@@ -68,14 +68,19 @@ describe "Viewing an individual movie" do
     before do
       movie = Movie.create movie_attributes
       movie.reviews.create review_attributes(stars: 1)
-      movie.reviews.create review_attributes(stars: 4)
-      movie.reviews.create review_attributes(stars: 2)
+      @recent_review1 = movie.reviews.create review_attributes(stars: 4)
+      @recent_review2 = movie.reviews.create review_attributes(stars: 2)
 
       visit movie_url(movie)
     end
 
     it "shows the average number of review stars" do
       expect(page).to have_text "2.3 stars"
+    end
+
+    it "shows the most-recently posted reviews" do
+      expect(page).to have_text "#{@recent_review1.stars} stars"
+      expect(page).to have_text "#{@recent_review2.stars} stars"
     end
   end
 
