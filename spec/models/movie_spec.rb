@@ -38,6 +38,8 @@ describe Movie do
       expect(movie.flop?).to eq false
     end
 
+    it "is never a flop if it's a cult movie, no matter the total gross"
+
     it "returns flops movies ordered with the lowest grossing movie first" do
       movie = Movie.create movie_attributes(total_gross: 60000000)
       flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
@@ -45,6 +47,29 @@ describe Movie do
       flop_movie3 = Movie.create movie_attributes(total_gross: 20000000)
 
       expect(Movie.flops).to eq [flop_movie3, flop_movie2, flop_movie1]
+    end
+  end
+
+  context "Being a cult classic" do
+    it "is a cult classic when it has more than 50 reviews and its average review is at least 4 stars" do
+      movie = Movie.create movie_attributes
+      51.times { movie.reviews.create review_attributes(stars: 4) }
+
+      expect(movie).to be_a_cult_classic
+    end
+
+    it "is not a cult classic when it has less than 50 reviews" do
+      movie = Movie.create movie_attributes
+      3.times { movie.reviews.create review_attributes(stars: 5) }
+
+      expect(movie).not_to be_a_cult_classic
+    end
+
+    it "is not a cult classic when its average review is lower than 4 stars" do
+      movie = Movie.create movie_attributes
+      51.times { movie.reviews.create review_attributes(stars: 3) }
+
+      expect(movie).not_to be_a_cult_classic
     end
   end
 
