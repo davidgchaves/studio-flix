@@ -237,4 +237,13 @@ describe "A movie" do
 
     expect(movie.average_stars).to eq 3
   end
+
+  it "returns its two most-recently posted reviews" do
+    movie = Movie.create movie_attributes
+    3.times { movie.reviews.create review_attributes(created_at: 1.hour.ago) }
+    recent_review1 = movie.reviews.create review_attributes
+    recent_review2 = movie.reviews.create review_attributes
+
+    expect(movie.recent_reviews).to eq [recent_review2, recent_review1]
+  end
 end
