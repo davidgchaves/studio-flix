@@ -15,6 +15,10 @@ class Movie < ActiveRecord::Base
     total_gross.blank? || total_gross < 50000000.00
   end
 
+  def cult_classic?
+    reviews.size > 50 && average_stars >= 4
+  end
+
   def self.released
     where("released_on <= ?", Time.now).order released_on: :desc
   end
