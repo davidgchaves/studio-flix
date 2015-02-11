@@ -41,7 +41,7 @@ describe "Viewing an individual movie" do
     expect(page).to have_selector "img[src$='#{movie_with_poster.image_file_name}']"
   end
 
-  it "show a default poster when there's no poster associated to the movie" do
+  it "shows a default poster when there's no poster associated to the movie" do
     movie_with_no_poster = Movie.create movie_attributes(image_file_name: "")
 
     visit movie_url(movie_with_no_poster)
