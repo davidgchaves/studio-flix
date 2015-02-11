@@ -2,9 +2,9 @@ require "rails_helper"
 require "support/attributes"
 
 describe "Viewing an individual movie" do
-  let!(:movie) { Movie.create movie_attributes }
-
   it "shows the movie's details" do
+    movie = Movie.create movie_attributes
+
     visit movie_url(movie)
 
     expect(page).to have_text movie.title
@@ -14,64 +14,87 @@ describe "Viewing an individual movie" do
     expect(page).to have_text movie.cast
     expect(page).to have_text movie.director
     expect(page).to have_text movie.duration
-    expect(page).to have_selector "img[src$='#{movie.image_file_name}']"
   end
 
-  it "shows the total gross if the total gross exceeds $50M" do
-    movie = Movie.create movie_attributes(total_gross: 60000000.00)
+  context "when the total gross exceeds $50M" do
+    before do
+      movie = Movie.create movie_attributes(total_gross: 60000000.00)
 
-    visit movie_url(movie)
+      visit movie_url(movie)
+    end
 
-    expect(page).to have_text "$60,000,000.00"
+    it "shows the total gross" do
+      expect(page).to have_text "$60,000,000.00"
+    end
   end
 
-  it "shows 'Flop!' if the total gross is less than $50M" do
-    flop_movie = Movie.create movie_attributes(total_gross: 40000000.00)
+  context "when the total gross is less than $50M" do
+    before do
+      flop_movie = Movie.create movie_attributes(total_gross: 40000000.00)
 
-    visit movie_url(flop_movie)
+      visit movie_url(flop_movie)
+    end
 
-    expect(page).to have_text "Flop!"
+    it "shows 'Flop!'" do
+      expect(page).to have_text "Flop!"
+    end
   end
 
-  it "shows the movie's poster when there's a poster associated to the movie" do
-    movie_with_poster = Movie.create movie_attributes(image_file_name: "wintersleep.jpg")
+  context "when there's a poster associated to the movie" do
+    before do
+      @movie_with_poster = Movie.create movie_attributes(image_file_name: "wintersleep.jpg")
 
-    visit movie_url(movie_with_poster)
+      visit movie_url(@movie_with_poster)
+    end
 
-    expect(page).to have_selector "img[src$='#{movie_with_poster.image_file_name}']"
+    it "shows the movie's poster" do
+      expect(page).to have_selector "img[src$='#{@movie_with_poster.image_file_name}']"
+    end
   end
 
-  it "shows a default poster when there's no poster associated to the movie" do
-    movie_with_no_poster = Movie.create movie_attributes(image_file_name: "")
+  context "when there's no poster associated to the movie" do
+    before do
+      movie_with_no_poster = Movie.create movie_attributes(image_file_name: "")
 
-    visit movie_url(movie_with_no_poster)
+      visit movie_url(movie_with_no_poster)
+    end
 
-    expect(page).to have_selector "img[src$='placeholder.png']"
+    it "shows a default poster" do
+      expect(page).to have_selector "img[src$='placeholder.png']"
+    end
   end
 
-  it "shows the average number of review stars when there's at least a review" do
-    movie = Movie.create movie_attributes
-    movie.reviews.create review_attributes(stars: 1)
-    movie.reviews.create review_attributes(stars: 4)
-    movie.reviews.create review_attributes(stars: 2)
+  context "when there's at least a review" do
+    before do
+      movie = Movie.create movie_attributes
+      movie.reviews.create review_attributes(stars: 1)
+      movie.reviews.create review_attributes(stars: 4)
+      movie.reviews.create review_attributes(stars: 2)
 
-    visit movie_url(movie)
+      visit movie_url(movie)
+    end
 
-    expect(page).to have_text "2.3 stars"
+    it "shows the average number of review stars" do
+      expect(page).to have_text "2.3 stars"
+    end
   end
 
-  it "shows a 'No Reviews' message when there's no reviews" do
-    movie = Movie.create movie_attributes
+  context "when there's no reviews" do
+    before do
+      movie = Movie.create movie_attributes
 
-    visit movie_url(movie)
+      visit movie_url(movie)
+    end
 
-    expect(page).to have_text "No Reviews"
+    it "shows a 'No Reviews' message" do
+      expect(page).to have_text "No Reviews"
+    end
   end
 
   it "allows navigation to its reviews" do
     movie = Movie.create movie_attributes
-    review1 = movie.reviews.create review_attributes
-    review2 = movie.reviews.create review_attributes
+    movie.reviews.create review_attributes
+    movie.reviews.create review_attributes
     visit movie_url(movie)
 
     click_link "2 reviews"
