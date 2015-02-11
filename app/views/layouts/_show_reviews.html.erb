@@ -1,0 +1,10 @@
+<ol id="reviews">
+  <% object.each do |review| %>
+    <li>
+      <span class="review"><%= pluralize review.stars, "star" %></span>
+      <span class="user"><%= review.name %></span>
+      <span class="date"><%= time_ago_in_words review.created_at %> ago</span>
+      <p>&quot;<%= review.comment %>&quot;</p>
+    </li>
+  <% end %>
+</ol>

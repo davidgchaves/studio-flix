@@ -22,16 +22,7 @@
   <p><%= format_average_stars @movie %></p>
 
   <h3>Reviews</h3>
-  <ol id="reviews">
-    <% @movie.recent_reviews.each do |review| %>
-      <li>
-        <span class="review"><%= pluralize review.stars, "star" %></span>
-        <span class="user"><%= review.name %></span>
-        <span class="date"><%= time_ago_in_words review.created_at %> ago</span>
-        <p>&quot;<%= review.comment %>&quot;</p>
-      </li>
-    <% end %>
-  </ol>
+  <%= render 'layouts/show_reviews', object: @movie.recent_reviews %>
 
   <%= link_to pluralize(@movie.reviews.size, "review"), movie_reviews_path(@movie), class: "button" %>
 
