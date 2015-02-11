@@ -94,6 +94,10 @@ describe "Viewing an individual movie" do
     it "shows a 'No Reviews' message" do
       expect(page).to have_text "No Reviews"
     end
+
+    it "does not show the reviews section" do
+      expect(page).not_to have_css "section#reviews"
+    end
   end
 
   it "allows navigation to its reviews" do
