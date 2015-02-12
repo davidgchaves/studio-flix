@@ -14,6 +14,7 @@ class Movie < ActiveRecord::Base
   scope :flops, -> { where("total_gross < ?", 50000000).order total_gross: :asc }
   scope :hits, -> { where("total_gross >= ?", 300000000).order total_gross: :desc }
   scope :released, -> { where("released_on <= ?", Time.now).order released_on: :desc }
+  scope :recently_added, -> { order(created_at: :desc).limit 3 }
 
   def flop?
     !cult_classic? && (total_gross.blank? || total_gross < 50000000.00)
@@ -21,10 +22,6 @@ class Movie < ActiveRecord::Base
 
   def cult_classic?
     reviews.size > 50 && average_stars >= 4
-  end
-
-  def self.recently_added
-    order(created_at: :desc).limit 3
   end
 
   def average_stars
