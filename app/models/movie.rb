@@ -12,6 +12,7 @@ class Movie < ActiveRecord::Base
     message: "must reference a GIF, JPG or PNG image" }
 
   scope :flops, -> { where("total_gross < ?", 50000000).order total_gross: :asc }
+  scope :released, -> { where("released_on <= ?", Time.now).order released_on: :desc }
 
   def flop?
     !cult_classic? && (total_gross.blank? || total_gross < 50000000.00)
@@ -19,10 +20,6 @@ class Movie < ActiveRecord::Base
 
   def cult_classic?
     reviews.size > 50 && average_stars >= 4
-  end
-
-  def self.released
-    where("released_on <= ?", Time.now).order released_on: :desc
   end
 
   def self.hits
