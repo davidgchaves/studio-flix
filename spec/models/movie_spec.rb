@@ -46,29 +46,6 @@ describe Movie do
     end
   end
 
-  context "flops query" do
-    it "only returns movies with a total gross less than $50M" do
-      flop_movie = Movie.create movie_attributes(total_gross: 30000000)
-
-      expect(Movie.flops).to include flop_movie
-    end
-
-    it "never returns movies with a total gross of at least $50M" do
-      movie = Movie.create movie_attributes(total_gross: 60000000)
-
-      expect(Movie.flops).not_to include movie
-    end
-
-    it "returns flops movies ordered with the lowest grossing movie first" do
-      movie = Movie.create movie_attributes(total_gross: 60000000)
-      flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
-      flop_movie2 = Movie.create movie_attributes(total_gross: 30000000)
-      flop_movie3 = Movie.create movie_attributes(total_gross: 20000000)
-
-      expect(Movie.flops).to eq [flop_movie3, flop_movie2, flop_movie1]
-    end
-  end
-
   context "Being a cult classic" do
     it "is a cult classic when it has more than 50 reviews and its average review is at least 4 stars" do
       movie = Movie.create movie_attributes
@@ -111,6 +88,29 @@ describe Movie do
       released_movie3 = Movie.create movie_attributes(released_on: 1.month.ago)
 
       expect(Movie.released).to eq [released_movie3, released_movie2, released_movie1]
+    end
+  end
+
+  context "flops query" do
+    it "only returns movies with a total gross less than $50M" do
+      flop_movie = Movie.create movie_attributes(total_gross: 30000000)
+
+      expect(Movie.flops).to include flop_movie
+    end
+
+    it "never returns movies with a total gross of at least $50M" do
+      movie = Movie.create movie_attributes(total_gross: 60000000)
+
+      expect(Movie.flops).not_to include movie
+    end
+
+    it "returns flops movies ordered with the lowest grossing movie first" do
+      movie = Movie.create movie_attributes(total_gross: 60000000)
+      flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
+      flop_movie2 = Movie.create movie_attributes(total_gross: 30000000)
+      flop_movie3 = Movie.create movie_attributes(total_gross: 20000000)
+
+      expect(Movie.flops).to eq [flop_movie3, flop_movie2, flop_movie1]
     end
   end
 
