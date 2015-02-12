@@ -136,15 +136,15 @@ describe Movie do
     end
   end
 
-  context "Being recently added" do
-    it "is recently added when is one of the last 3 created movies" do
+  context "recently added query" do
+    it "only returns movies that are one of the last 3 created movies" do
       3.times { Movie.create movie_attributes(created_at: 1.hour.ago) }
       recently_added_movie = Movie.create movie_attributes(created_at: Time.now)
 
       expect(Movie.recently_added).to include recently_added_movie
     end
 
-    it "is not recently added when is not one of the last 3 created movies" do
+    it "never returns movies that are not one of the last 3 created movies" do
       movie = Movie.create movie_attributes(created_at: 1.hour.ago)
       3.times { Movie.create movie_attributes(created_at: Time.now) }
 
