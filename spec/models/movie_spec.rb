@@ -92,14 +92,14 @@ describe Movie do
     end
   end
 
-  context "Being released" do
-    it "is released when the released on date is the past" do
+  context "released query" do
+    it "only returns movies with a released on date in the past" do
       released_movie = Movie.create movie_attributes(released_on: 3.months.ago)
 
       expect(Movie.released).to include released_movie
     end
 
-    it "is not released when the released on date is in the future" do
+    it "never returns movies with a released on date in the future" do
       movie = Movie.create movie_attributes(released_on: 3.months.from_now)
 
       expect(Movie.released).not_to include movie
