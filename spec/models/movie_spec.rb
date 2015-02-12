@@ -114,20 +114,20 @@ describe Movie do
     end
   end
 
-  context "Being a hit" do
-    it "is a hit when the total gross is at least $300M" do
+  context "hits query" do
+    it "only returns movies with a total gross of at least $300M" do
       hit_movie = Movie.create movie_attributes(total_gross: 400000000)
 
       expect(Movie.hits).to include hit_movie
     end
 
-    it "is not a hit when the total gross is less than $300M" do
+    it "never returns movies with a total gross of less than $300M" do
       movie = Movie.create movie_attributes(total_gross: 200000000)
 
       expect(Movie.hits).not_to include movie
     end
 
-    it "returns hits movies ordered with the highest grossing movie first" do
+    it "returns hit movies ordered with the highest grossing movie first" do
       hit_movie1 = Movie.create movie_attributes(total_gross: 300000000)
       hit_movie2 = Movie.create movie_attributes(total_gross: 400000000)
       hit_movie3 = Movie.create movie_attributes(total_gross: 500000000)
