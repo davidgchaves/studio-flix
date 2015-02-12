@@ -47,6 +47,18 @@ describe Movie do
   end
 
   context "flops query" do
+    it "only returns movies with a total gross less than $50M" do
+      flop_movie = Movie.create movie_attributes(total_gross: 30000000)
+
+      expect(Movie.flops).to include flop_movie
+    end
+
+    it "never returns movies with a total gross of at least $50M" do
+      movie = Movie.create movie_attributes(total_gross: 60000000)
+
+      expect(Movie.flops).not_to include movie
+    end
+
     it "returns flops movies ordered with the lowest grossing movie first" do
       movie = Movie.create movie_attributes(total_gross: 60000000)
       flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
