@@ -44,7 +44,9 @@ describe Movie do
 
       expect(cult_movie.flop?).to eq false
     end
+  end
 
+  context "flops query" do
     it "returns flops movies ordered with the lowest grossing movie first" do
       movie = Movie.create movie_attributes(total_gross: 60000000)
       flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
