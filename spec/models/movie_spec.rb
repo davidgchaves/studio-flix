@@ -38,7 +38,7 @@ describe Movie do
       expect(movie.flop?).to eq false
     end
 
-    it "is never a flop if it's a cult movie, no matter the total gross" do
+    it "is never a flop if it's a cult classic, no matter the total gross" do
       cult_movie = Movie.create movie_attributes(total_gross: 0.00)
       allow(cult_movie).to receive(:cult_classic?) { true }
 
