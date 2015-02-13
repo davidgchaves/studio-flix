@@ -38,6 +38,11 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  # Suppress verbose error messages (gems in stack traces)
+  # Check this link for further info:
+  #   https://github.com/rspec/rspec-rails/issues/1237
+  config.backtrace_exclusion_patterns << %r{/gems/}
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
