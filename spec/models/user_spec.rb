@@ -18,6 +18,12 @@ describe User do
 
         expect(invalid_user.errors[:password_confirmation].any?).to be_truthy
       end
+
+      it "is automatically encrypted into the password_digest attribute" do
+         user = User.new password: "secret"
+
+         expect(user.password_digest.present?).to be_truthy
+      end
     end
   end
 end
