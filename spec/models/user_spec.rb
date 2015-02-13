@@ -11,6 +11,16 @@ describe User do
     end
   end
 
+  describe "email" do
+    it "can't be blank" do
+      invalid_user = User.new email: ""
+
+      invalid_user.valid?
+
+      expect(invalid_user.errors[:email].any?).to be_truthy
+    end
+  end
+
   describe "password" do
     it "can't be blank" do
       invalid_user = User.new password: ""
