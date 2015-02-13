@@ -1,6 +1,15 @@
 require 'rails_helper'
+require 'support/attributes'
 
 describe User do
+  context "with example attributes" do
+    it "is valid" do
+      valid_user = User.new user_attributes
+
+      expect(valid_user.valid?).to be_truthy
+    end
+  end
+
   describe "name" do
     it "can't be blank" do
       invalid_user = User.new name: ""
@@ -21,10 +30,7 @@ describe User do
     end
 
     it "has to be unique and case insensitive" do
-      valid_user = User.create! name: "Example User",
-                                email: "user@example.com",
-                                password: "secret",
-                                password_confirmation: "secret"
+      valid_user = User.create! user_attributes
       invalid_user = User.new email: valid_user.email
 
       invalid_user.valid?
