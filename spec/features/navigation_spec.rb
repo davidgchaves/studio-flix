@@ -2,10 +2,8 @@ require "rails_helper"
 require "support/attributes"
 
 describe "The sidebar" do
-  before(:example) do
-    movie = Movie.create movie_attributes
-    visit movie_url(movie)
-  end
+  let(:movie) { Movie.create movie_attributes }
+  before(:example) { visit movie_url(movie) }
 
   it "allows direct navigation to the listing page" do
     click_link "All Movies"
