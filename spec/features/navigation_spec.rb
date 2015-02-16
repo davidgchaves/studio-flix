@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/attributes"
 
 describe "The sidebar" do
-  before do
+  before(:example) do
     movie = Movie.create movie_attributes
     visit movie_url(movie)
   end

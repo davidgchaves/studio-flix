@@ -3,7 +3,7 @@ require "support/attributes"
 
 describe Movie do
   context "Reviews" do
-    before do
+    before(:example) do
       @movie = Movie.create movie_attributes
       @review1 = @movie.reviews.create review_attributes
       @review2 = @movie.reviews.create review_attributes
@@ -162,7 +162,7 @@ describe Movie do
 
   context "Validations" do
     context "Invalid when" do
-      before do
+      before(:example) do
         @invalid_movie = Movie.new title: "",
           description: "X" * 24,
           released_on: "",

@@ -17,7 +17,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when the total gross exceeds $50M" do
-    before do
+    before(:example) do
       movie = Movie.create movie_attributes(total_gross: 60000000.00)
 
       visit movie_url(movie)
@@ -29,7 +29,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when the total gross is less than $50M" do
-    before do
+    before(:example) do
       flop_movie = Movie.create movie_attributes(total_gross: 40000000.00)
 
       visit movie_url(flop_movie)
@@ -41,7 +41,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when there's a poster associated to the movie" do
-    before do
+    before(:example) do
       @movie_with_poster = Movie.create movie_attributes(image_file_name: "wintersleep.jpg")
 
       visit movie_url(@movie_with_poster)
@@ -53,7 +53,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when there's no poster associated to the movie" do
-    before do
+    before(:example) do
       movie_with_no_poster = Movie.create movie_attributes(image_file_name: "")
 
       visit movie_url(movie_with_no_poster)
@@ -65,7 +65,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when there's at least a review" do
-    before do
+    before(:example) do
       movie = Movie.create movie_attributes
       movie.reviews.create review_attributes(stars: 1)
       @recent_review1 = movie.reviews.create review_attributes(stars: 4)
@@ -85,7 +85,7 @@ describe "Viewing an individual movie" do
   end
 
   context "when there's no reviews" do
-    before do
+    before(:example) do
       movie = Movie.create movie_attributes
 
       visit movie_url(movie)

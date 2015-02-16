@@ -4,7 +4,7 @@ require "support/attributes"
 describe "Deleting a movie" do
   let!(:movie) { Movie.create movie_attributes }
 
-  before do
+  before(:example) do
     visit movie_url(movie)
     click_link "Delete"
   end

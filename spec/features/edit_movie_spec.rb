@@ -4,7 +4,7 @@ require "support/attributes"
 describe "Editing a movie" do
   let!(:movie) { Movie.create movie_attributes }
 
-  before do
+  before(:example) do
     visit movie_url(movie)
     click_link "Edit"
   end
@@ -18,7 +18,7 @@ describe "Editing a movie" do
   end
 
   context "on success" do
-    before do
+    before(:example) do
       fill_in "Title" , with: "Updated Movie Title"
       click_button "Update Movie"
     end
@@ -37,7 +37,7 @@ describe "Editing a movie" do
   end
 
   context "on failure" do
-    before do
+    before(:example) do
       fill_in "Title", with: ""
       fill_in "Description", with: "Superheroes saving the world from villains"
 

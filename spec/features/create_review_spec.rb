@@ -4,7 +4,7 @@ require 'support/attributes'
 describe "Creating a new review for a movie" do
   let(:movie) { Movie.create movie_attributes }
 
-  before do
+  before(:example) do
     visit movie_url(movie)
 
     click_link "Write Review"
@@ -25,7 +25,7 @@ describe "Creating a new review for a movie" do
   end
 
   context "on success" do
-    before do
+    before(:example) do
       fill_in "Name", with: "Roger Ebert"
       choose "review_stars_3"
       fill_in "Comment", with: "I laughed, I cried, I spilled my popcorn!"
@@ -48,7 +48,7 @@ describe "Creating a new review for a movie" do
   end
 
   context "on failure" do
-    before do
+    before(:example) do
       fill_in "Name", with: ""
 
       click_button "Post Review"

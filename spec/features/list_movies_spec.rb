@@ -31,7 +31,7 @@ describe "Viewing the list of movies" do
                                duration: "140 min",
                                image_file_name: "leviathan.jpg" }
 
-  before { visit movies_url }
+  before(:example) { visit movies_url }
 
   it "shows the released movies" do
     expect(page).to have_text "Flix"

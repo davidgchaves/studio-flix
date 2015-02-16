@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Creating a new movie" do
-  before do
+  before(:example) do
     visit movies_url
     click_link "Add New Movie"
   end
@@ -16,7 +16,7 @@ describe "Creating a new movie" do
   end
 
   context "when on success" do
-    before do
+    before(:example) do
       fill_in "Title", with: "New Movie Title"
       fill_in "Description", with: "Superheroes saving the world from villains"
       select "PG-13", from: "Rating"
@@ -44,7 +44,7 @@ describe "Creating a new movie" do
   end
 
   context "on failure" do
-    before do
+    before(:example) do
       fill_in "Title", with: ""
       fill_in "Description", with: "Superheroes saving the world from villains"
 
