@@ -2,6 +2,15 @@ require "rails_helper"
 require "support/attributes"
 
 describe Movie do
+
+  context "with example attributes" do
+    it "is valid" do
+      valid_movie = Movie.new movie_attributes
+
+      expect(valid_movie.valid?).to be_truthy
+    end
+  end
+
   context "Reviews" do
     before(:example) do
       @movie = Movie.create movie_attributes
@@ -245,12 +254,6 @@ describe Movie do
           expect(movie.errors[:rating].any?).to eq false
         end
       end
-    end
-
-    it "is valid with example attributes" do
-      movie = Movie.new movie_attributes
-
-      expect(movie.valid?).to eq true
     end
   end
 
