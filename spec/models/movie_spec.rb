@@ -70,74 +70,68 @@ describe Movie do
   end
 
   context "released query" do
-    it "only returns movies with a released on date in the past" do
-      released_movie = Movie.create movie_attributes(released_on: 3.months.ago)
+    let(:unreleased_movie) { Movie.create movie_attributes(released_on: 3.months.from_now) }
+    let(:released_movie1) { Movie.create movie_attributes(released_on: 3.months.ago) }
+    let(:released_movie2) { Movie.create movie_attributes(released_on: 2.months.ago) }
+    let(:released_movie3) { Movie.create movie_attributes(released_on: 1.month.ago) }
 
-      expect(Movie.released).to include released_movie
+    it "only returns movies with a released on date in the past" do
+      expect(Movie.released).to include released_movie1
     end
 
     it "never returns movies with a released on date in the future" do
-      movie = Movie.create movie_attributes(released_on: 3.months.from_now)
-
-      expect(Movie.released).not_to include movie
+      expect(Movie.released).not_to include unreleased_movie
     end
 
     it "returns released movies ordered with the most recently-released movie first" do
-      released_movie1 = Movie.create movie_attributes(released_on: 3.months.ago)
-      released_movie2 = Movie.create movie_attributes(released_on: 2.months.ago)
-      released_movie3 = Movie.create movie_attributes(released_on: 1.month.ago)
-
       expect(Movie.released).to eq [released_movie3, released_movie2, released_movie1]
     end
   end
 
   context "flops query" do
-    it "only returns movies with a total gross less than $50M" do
-      flop_movie = Movie.create movie_attributes(total_gross: 30000000)
+    let(:movie) { Movie.create movie_attributes(total_gross: 60000000) }
+    let(:flop_movie1) { Movie.create movie_attributes(total_gross: 40000000) }
+    let(:flop_movie2) { Movie.create movie_attributes(total_gross: 30000000) }
+    let(:flop_movie3) { Movie.create movie_attributes(total_gross: 20000000) }
 
-      expect(Movie.flops).to include flop_movie
+    it "only returns movies with a total gross less than $50M" do
+      expect(Movie.flops).to include flop_movie1
     end
 
     it "never returns movies with a total gross of at least $50M" do
-      movie = Movie.create movie_attributes(total_gross: 60000000)
-
       expect(Movie.flops).not_to include movie
     end
 
     it "returns flops movies ordered with the lowest grossing movie first" do
-      movie = Movie.create movie_attributes(total_gross: 60000000)
-      flop_movie1 = Movie.create movie_attributes(total_gross: 40000000)
-      flop_movie2 = Movie.create movie_attributes(total_gross: 30000000)
-      flop_movie3 = Movie.create movie_attributes(total_gross: 20000000)
-
       expect(Movie.flops).to eq [flop_movie3, flop_movie2, flop_movie1]
     end
   end
 
   context "hits query" do
-    it "only returns movies with a total gross of at least $300M" do
-      hit_movie = Movie.create movie_attributes(total_gross: 400000000)
+    let(:movie) { Movie.create movie_attributes(total_gross: 200000000) }
+    let(:hit_movie1) { Movie.create movie_attributes(total_gross: 300000000) }
+    let(:hit_movie2) { Movie.create movie_attributes(total_gross: 400000000) }
+    let(:hit_movie3) { Movie.create movie_attributes(total_gross: 500000000) }
 
-      expect(Movie.hits).to include hit_movie
+    it "only returns movies with a total gross of at least $300M" do
+      expect(Movie.hits).to include hit_movie1
     end
 
     it "never returns movies with a total gross of less than $300M" do
-      movie = Movie.create movie_attributes(total_gross: 200000000)
-
       expect(Movie.hits).not_to include movie
     end
 
     it "returns hit movies ordered with the highest grossing movie first" do
-      hit_movie1 = Movie.create movie_attributes(total_gross: 300000000)
-      hit_movie2 = Movie.create movie_attributes(total_gross: 400000000)
-      hit_movie3 = Movie.create movie_attributes(total_gross: 500000000)
-
       expect(Movie.hits).to eq [hit_movie3, hit_movie2, hit_movie1]
     end
   end
 
   context "recently added query" do
-    it "only returns movies that are one of the last 3 created movies" do
+    let(:movie1) { Movie.create movie_attributes(created_at: 3.hours.ago) }
+    let(:movie2) { Movie.create movie_attributes(created_at: 2.hours.ago) }
+    let(:movie3) { Movie.create movie_attributes(created_at: 1.hours.ago) }
+
+    it "only returns the last 3 created movies" do
       3.times { Movie.create movie_attributes(created_at: 1.hour.ago) }
       recently_added_movie = Movie.create movie_attributes(created_at: Time.now)
 
@@ -145,46 +139,36 @@ describe Movie do
     end
 
     it "never returns movies that are not one of the last 3 created movies" do
-      movie = Movie.create movie_attributes(created_at: 1.hour.ago)
       3.times { Movie.create movie_attributes(created_at: Time.now) }
 
-      expect(Movie.recently_added).not_to include movie
+      expect(Movie.recently_added).not_to include movie1
     end
 
     it "returns recently added movies ordered with the most recently added movie first" do
-      movie1 = Movie.create movie_attributes(created_at: 3.hours.ago)
-      movie2 = Movie.create movie_attributes(created_at: 2.hours.ago)
-      movie3 = Movie.create movie_attributes(created_at: 1.hours.ago)
-
       expect(Movie.recently_added).to eq [movie3, movie2, movie1]
     end
   end
 
   context "Validations" do
-    context "Invalid when" do
-      before(:example) do
-        @invalid_movie = Movie.new title: "",
-          description: "X" * 24,
-          released_on: "",
-          duration: ""
 
-        @invalid_movie.valid?
-      end
+    context "Invalid when" do
+      let(:invalid_movie) { Movie.new title: "", description: "X" * 24, released_on: "", duration: "" }
+      before(:example) { invalid_movie.valid? }
 
       it "has a blank title" do
-        expect(@invalid_movie.errors[:title].any?).to eq true
+        expect(invalid_movie.errors[:title].any?).to eq true
       end
 
       it "has a description with less than 25 characters" do
-        expect(@invalid_movie.errors[:description].any?).to eq true
+        expect(invalid_movie.errors[:description].any?).to eq true
       end
 
       it "has a blank released on date" do
-        expect(@invalid_movie.errors[:released_on].any?).to eq true
+        expect(invalid_movie.errors[:released_on].any?).to eq true
       end
 
       it "has a blank duration" do
-        expect(@invalid_movie.errors[:duration].any?).to eq true
+        expect(invalid_movie.errors[:duration].any?).to eq true
       end
     end
 
