@@ -21,6 +21,12 @@ describe Movie do
     end
   end
 
+  context "duration" do
+    it "can't be blank" do
+      expect(subject).to validate_presence_of :duration
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -163,10 +169,6 @@ describe Movie do
 
       it "has a blank released on date" do
         expect(invalid_movie.errors[:released_on].any?).to eq true
-      end
-
-      it "has a blank duration" do
-        expect(invalid_movie.errors[:duration].any?).to eq true
       end
     end
 
