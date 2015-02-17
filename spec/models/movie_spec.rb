@@ -55,6 +55,16 @@ describe Movie do
     it "can be blank" do
       expect(subject).to allow_value("").for :image_file_name
     end
+
+    context "when properly formatted" do
+      let(:valid_file_names) { %w[e.png movie.png movie.jpg movie.gif MOVIE.GIF] }
+
+      it "is valid" do
+        valid_file_names.each do |valid_file_name|
+          expect(subject).to allow_value(valid_file_name).for :image_file_name
+        end
+      end
+    end
   end
 
   context "Being a flop" do
@@ -188,7 +198,6 @@ describe Movie do
   end
 
   context "Validations" do
-
     context "Rejections" do
       it "rejects improperly formatted image file names" do
         invalid_file_names = %w[movie .jpg .png .gif movie.pdf movie.doc]
@@ -198,19 +207,6 @@ describe Movie do
           movie.valid?
 
           expect(movie.errors[:image_file_name].any?).to eq true
-        end
-      end
-    end
-
-    context "Acceptances" do
-      it "accepts properly formatted image file names" do
-        valid_file_names = %w[e.png movie.png movie.jpg movie.gif MOVIE.GIF]
-        valid_file_names.each do |valid_file_name|
-          movie = Movie.new image_file_name: valid_file_name
-
-          movie.valid?
-
-          expect(movie.errors[:image_file_name].any?).to eq false
         end
       end
     end
