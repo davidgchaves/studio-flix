@@ -7,9 +7,9 @@ class Movie < ActiveRecord::Base
   validates_length_of :description, minimum: 25
   validates_numericality_of :total_gross, greater_than_or_equal_to: 0
   validates_inclusion_of :rating, in: RATINGS
-  validates :image_file_name, allow_blank: true, format: {
+  validates_format_of :image_file_name, allow_blank: true,
     with: /\w+\.(jpg|png|gif)\z/i,
-    message: "must reference a GIF, JPG or PNG image" }
+    message: "must reference a GIF, JPG or PNG image"
 
   scope :flops, -> { where("total_gross < ?", 50000000).order total_gross: :asc }
   scope :hits, -> { where("total_gross >= ?", 300000000).order total_gross: :desc }

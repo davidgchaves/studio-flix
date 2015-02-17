@@ -51,6 +51,12 @@ describe Movie do
     end
   end
 
+  context "image filename" do
+    it "can be blank" do
+      expect(subject).to allow_value("").for :image_file_name
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -197,14 +203,6 @@ describe Movie do
     end
 
     context "Acceptances" do
-      it "accepts a blank image file name" do
-        movie = Movie.new image_file_name: ""
-
-        movie.valid?
-
-        expect(movie.errors[:image_file_name].any?).to eq false
-      end
-
       it "accepts properly formatted image file names" do
         valid_file_names = %w[e.png movie.png movie.jpg movie.gif MOVIE.GIF]
         valid_file_names.each do |valid_file_name|
