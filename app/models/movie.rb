@@ -3,7 +3,7 @@ class Movie < ActiveRecord::Base
 
   RATINGS = %w(G PG PG-13 R NC-17)
 
-  validates :title, :released_on, :duration, presence: true
+  validates_presence_of :title, :released_on, :duration
   validates :description, length: { minimum: 25 }
   validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
   validates :rating, inclusion: { in: RATINGS }

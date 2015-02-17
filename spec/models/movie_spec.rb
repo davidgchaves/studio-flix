@@ -15,6 +15,12 @@ describe Movie do
     expect(subject).to have_many(:reviews).dependent :destroy
   end
 
+  context "title" do
+    it "can't be blank" do
+      expect(subject).to validate_presence_of :title
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -150,10 +156,6 @@ describe Movie do
     context "Invalid when" do
       let(:invalid_movie) { Movie.new title: "", description: "X" * 24, released_on: "", duration: "" }
       before(:example) { invalid_movie.valid? }
-
-      it "has a blank title" do
-        expect(invalid_movie.errors[:title].any?).to eq true
-      end
 
       it "has a description with less than 25 characters" do
         expect(invalid_movie.errors[:description].any?).to eq true
