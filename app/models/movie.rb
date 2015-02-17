@@ -5,7 +5,7 @@ class Movie < ActiveRecord::Base
 
   validates_presence_of :title, :released_on, :duration
   validates_length_of :description, minimum: 25
-  validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
+  validates_numericality_of :total_gross, greater_than_or_equal_to: 0
   validates :rating, inclusion: { in: RATINGS }
   validates :image_file_name, allow_blank: true, format: {
     with: /\w+\.(jpg|png|gif)\z/i,

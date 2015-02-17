@@ -39,6 +39,12 @@ describe Movie do
     end
   end
 
+  context "total gross" do
+    it "is at least 0$" do
+      expect(subject).to validate_numericality_of(:total_gross).is_greater_than_or_equal_to 0
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -172,14 +178,6 @@ describe Movie do
   context "Validations" do
 
     context "Rejections" do
-      it "rejects a negative total gross" do
-        movie = Movie.new total_gross: -123456.00
-
-        movie.valid?
-
-        expect(movie.errors[:total_gross].any?).to eq true
-      end
-
       it "rejects improperly formatted image file names" do
         invalid_file_names = %w[movie .jpg .png .gif movie.pdf movie.doc]
         invalid_file_names.each do |invalid_file_name|
@@ -204,17 +202,6 @@ describe Movie do
     end
 
     context "Acceptances" do
-      it "accepts a positive (or $0) total gross" do
-        totals = %w[0.00 20000000.00]
-        totals.each do |total_gross|
-          movie = Movie.new total_gross: total_gross
-
-          movie.valid?
-
-          expect(movie.errors[:total_gross].any?).to eq false
-        end
-      end
-
       it "accepts a blank image file name" do
         movie = Movie.new image_file_name: ""
 
