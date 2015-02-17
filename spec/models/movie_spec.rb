@@ -65,6 +65,16 @@ describe Movie do
         end
       end
     end
+
+    context "when improperly formatted" do
+      let(:invalid_file_names) { %w[movie .jpg .png .gif movie.pdf movie.doc] }
+
+      it "is invalid" do
+        invalid_file_names.each do |invalid_file_name|
+          expect(subject).not_to allow_value(invalid_file_name).for :image_file_name
+        end
+      end
+    end
   end
 
   context "Being a flop" do
@@ -194,21 +204,6 @@ describe Movie do
 
     it "returns recently added movies ordered with the most recently added movie first" do
       expect(Movie.recently_added).to eq [movie3, movie2, movie1]
-    end
-  end
-
-  context "Validations" do
-    context "Rejections" do
-      it "rejects improperly formatted image file names" do
-        invalid_file_names = %w[movie .jpg .png .gif movie.pdf movie.doc]
-        invalid_file_names.each do |invalid_file_name|
-          movie = Movie.new image_file_name: invalid_file_name
-
-          movie.valid?
-
-          expect(movie.errors[:image_file_name].any?).to eq true
-        end
-      end
     end
   end
 
