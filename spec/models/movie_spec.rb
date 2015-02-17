@@ -45,6 +45,12 @@ describe Movie do
     end
   end
 
+  context "rating" do
+    it "is picked from an approved ratings list" do
+      expect(subject).to validate_inclusion_of(:rating).in_array %w[G PG PG-13 R NC-17]
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -188,17 +194,6 @@ describe Movie do
           expect(movie.errors[:image_file_name].any?).to eq true
         end
       end
-
-      it "rejects any rating that is not in the approved list" do
-        wrong_ratings = %w[R-13 R-16 R-18 R-21]
-        wrong_ratings.each do |wrong_rating|
-          movie = Movie.new rating: wrong_rating
-
-          movie.valid?
-
-          expect(movie.errors[:rating].any?).to eq true
-        end
-      end
     end
 
     context "Acceptances" do
@@ -218,17 +213,6 @@ describe Movie do
           movie.valid?
 
           expect(movie.errors[:image_file_name].any?).to eq false
-        end
-      end
-
-      it "accepts any rating that is in an approved list" do
-        valid_ratings = %w[G PG PG-13 R NC-17]
-        valid_ratings.each do |valid_rating|
-          movie = Movie.new rating: valid_rating
-
-          movie.valid?
-
-          expect(movie.errors[:rating].any?).to eq false
         end
       end
     end
