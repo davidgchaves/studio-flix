@@ -11,21 +11,8 @@ describe Movie do
     end
   end
 
-  context "Reviews" do
-    before(:example) do
-      @movie = Movie.create movie_attributes
-      @review1 = @movie.reviews.create review_attributes
-      @review2 = @movie.reviews.create review_attributes
-    end
-
-    it "has many reviews" do
-      expect(@movie.reviews).to include @review1
-      expect(@movie.reviews).to include @review2
-    end
-
-    it "deletes associated reviews" do
-      expect{@movie.destroy}.to change(Review, :count).by -2
-    end
+  it "has many (destroy dependent) reviews" do
+    expect(subject).to have_many(:reviews).dependent :destroy
   end
 
   context "Being a flop" do
