@@ -3,11 +3,7 @@ require 'support/attributes'
 
 describe Review do
   it "belongs to a movie" do
-    movie = Movie.create movie_attributes
-
-    review = movie.reviews.new review_attributes
-
-    expect(review.movie).to eq movie
+    expect(subject).to belong_to :movie
   end
 
   it "requires a name" do
