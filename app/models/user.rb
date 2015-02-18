@@ -5,5 +5,5 @@ class User < ActiveRecord::Base
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
                     email: true
-  validates_length_of :password, { minimum: 10, allow_blank: true }
+  validates_length_of :password, minimum: 10
 end
