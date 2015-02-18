@@ -104,13 +104,15 @@ describe Movie do
     end
   end
 
-  context "Being a flop" do
-    it "is a flop if the total gross is less than $50M" do
-      flop_movie = Movie.new total_gross: 40000000.00
+  context "with a less than $50M total gross" do
+    let(:flop_movie) { Movie.new total_gross: 40000000.00 }
 
-      expect(flop_movie.flop?).to eq true
+    it "is a flop" do
+      expect(flop_movie).to be_a_flop
     end
+  end
 
+  context "Being a flop" do
     it "is a flop if the total gross is blank" do
       flop_movie = Movie.new total_gross: nil
 
