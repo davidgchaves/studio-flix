@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/attributes"
 
 describe Movie do
-  let(:movie) { Movie.create movie_attributes }
+  let(:movie) { Movie.new movie_attributes }
 
   context "with example attributes" do
     it "is valid" do
@@ -222,6 +222,7 @@ describe Movie do
   end
 
   it "calculates the average number of review stars" do
+    movie.save!
     movie.reviews.create review_attributes(stars: 1)
     movie.reviews.create review_attributes(stars: 3)
     movie.reviews.create review_attributes(stars: 5)
@@ -230,6 +231,7 @@ describe Movie do
   end
 
   it "returns its two most-recently posted reviews" do
+    movie.save!
     3.times { movie.reviews.create review_attributes(created_at: 1.hour.ago) }
     recent_review1 = movie.reviews.create review_attributes
     recent_review2 = movie.reviews.create review_attributes
