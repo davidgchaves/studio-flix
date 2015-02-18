@@ -131,13 +131,13 @@ describe Movie do
         expect(movie).to be_a_flop
       end
     end
-  end
 
-  context "Being a flop" do
-    it "is not a flop if the total gross exceeds $50M" do
-      movie = Movie.new total_gross: 60000000.00
+    context "and a $50M or more total gross" do
+      before(:example) { expect(movie).to receive(:total_gross).and_return(50000000.00).at_least :once }
 
-      expect(movie.flop?).to eq false
+      it "can't be a flop" do
+        expect(movie).not_to be_a_flop
+      end
     end
   end
 
