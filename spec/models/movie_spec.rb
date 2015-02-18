@@ -116,15 +116,7 @@ describe Movie do
   context "that is not a cult classic" do
     before(:example) { expect(movie).to receive(:cult_classic?).and_return(false).once }
 
-    context "and less than $50M total gross" do
-      before(:example) { expect(movie).to receive(:total_gross).and_return(40000000.00).at_least :once }
-
-      it "is a flop" do
-        expect(movie).to be_a_flop
-      end
-    end
-
-    context "and a blank total gross" do
+    context "and with an unknown total gross" do
       before(:example) { expect(movie).to receive(:total_gross).and_return(nil).at_least :once }
 
       it "is a flop" do
@@ -132,7 +124,15 @@ describe Movie do
       end
     end
 
-    context "and a $50M or more total gross" do
+    context "and with less than $50M total gross" do
+      before(:example) { expect(movie).to receive(:total_gross).and_return(40000000.00).at_least :once }
+
+      it "is a flop" do
+        expect(movie).to be_a_flop
+      end
+    end
+
+    context "and with a $50M or more total gross" do
       before(:example) { expect(movie).to receive(:total_gross).and_return(50000000.00).at_least :once }
 
       it "can't be a flop" do
