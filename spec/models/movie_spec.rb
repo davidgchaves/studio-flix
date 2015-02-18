@@ -2,12 +2,11 @@ require "rails_helper"
 require "support/attributes"
 
 describe Movie do
+  let(:movie) { Movie.create movie_attributes }
 
   context "with example attributes" do
     it "is valid" do
-      valid_movie = Movie.new movie_attributes
-
-      expect(valid_movie.valid?).to be_truthy
+      expect(movie.valid?).to be_truthy
     end
   end
 
