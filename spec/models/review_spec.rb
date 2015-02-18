@@ -26,17 +26,6 @@ describe Review do
     end
   end
 
-  it "rejects bad formatted locations with a custom message" do
-    invalid_locations = ["Boston, MAS", "Austin,TX", "Portland-OR", "portland, OR", "Portland, or"]
-    invalid_locations.each do |invalid_location|
-      invalid_review = Review.new location: invalid_location
-
-      invalid_review.valid?
-
-      expect(invalid_review.errors[:location].first).to eq "must be 'City, STATE' (with that casing)"
-    end
-  end
-
   describe "location" do
     context "when properly formatted" do
       let(:valid_locations) { ["Boston, MA", "Austin, TX", "Portland, OR"] }
@@ -44,6 +33,16 @@ describe Review do
       it "is valid" do
         valid_locations.each do |valid_location|
           expect(subject).to allow_value(valid_location).for :location
+        end
+      end
+    end
+
+    context "when improperly formatted" do
+      let(:invalid_locations) { ["Boston, MAS", "Austin,TX", "Portland-OR", "portland, OR", "Portland, or"] }
+
+      it "is invalid" do
+        invalid_locations.each do |invalid_location|
+          expect(subject).not_to allow_value(invalid_location).for :location
         end
       end
     end
