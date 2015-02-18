@@ -12,11 +12,7 @@ describe User do
 
   describe "name" do
     it "can't be blank" do
-      invalid_user = User.new name: ""
-
-      invalid_user.valid?
-
-      expect(invalid_user.errors[:name].any?).to be_truthy
+      expect(subject).to validate_presence_of :name
     end
   end
 
