@@ -21,13 +21,8 @@ describe User do
       expect(subject).to validate_presence_of :email
     end
 
-    it "has to be unique and case insensitive" do
-      valid_user = User.create! user_attributes
-      invalid_user = User.new email: valid_user.email
-
-      invalid_user.valid?
-
-      expect(invalid_user.errors[:email].any?).to be_truthy
+    it "has to be (case insensitive) unique" do
+      expect(subject).to validate_uniqueness_of(:email).case_insensitive
     end
 
     it "accepts properly formatted emails" do
