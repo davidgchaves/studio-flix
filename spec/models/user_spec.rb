@@ -25,14 +25,13 @@ describe User do
       expect(subject).to validate_uniqueness_of(:email).case_insensitive
     end
 
-    it "accepts properly formatted emails" do
-      valid_emails = ["moe.sTOO@stoogies.com", "moe.sTOO@st.o.gies.com"]
-      valid_emails.each do |valid_email|
-        valid_user = User.new email: valid_email
+    context "when properly formatted" do
+      let(:valid_emails) { ["moe.sTOO@stoogies.com", "moe.sTOO@st.o.gies.com"] }
 
-        valid_user.valid?
-
-        expect(valid_user.errors[:email].any?).to be_falsy
+      it "is valid" do
+        valid_emails.each do |valid_email|
+          expect(subject).to allow_value(valid_email).for :email
+        end
       end
     end
 
