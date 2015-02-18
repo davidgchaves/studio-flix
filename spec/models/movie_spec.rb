@@ -14,43 +14,43 @@ describe Movie do
     expect(subject).to have_many(:reviews).dependent :destroy
   end
 
-  context "title" do
+  describe "title" do
     it "can't be blank" do
       expect(subject).to validate_presence_of :title
     end
   end
 
-  context "duration" do
+  describe "duration" do
     it "can't be blank" do
       expect(subject).to validate_presence_of :duration
     end
   end
 
-  context "released on date" do
+  describe "released on date" do
     it "can't be blank" do
       expect(subject).to validate_presence_of :released_on
     end
   end
 
-  context "description" do
+  describe "description" do
     it "contains at least 25 characters" do
       expect(subject).to validate_length_of(:description).is_at_least 25
     end
   end
 
-  context "total gross" do
+  describe "total gross" do
     it "is at least 0$" do
       expect(subject).to validate_numericality_of(:total_gross).is_greater_than_or_equal_to 0
     end
   end
 
-  context "rating" do
+  describe "rating" do
     it "is picked from an approved ratings list" do
       expect(subject).to validate_inclusion_of(:rating).in_array %w[G PG PG-13 R NC-17]
     end
   end
 
-  context "image filename" do
+  describe "image filename" do
     it "can be blank" do
       expect(subject).to allow_value("").for :image_file_name
     end
@@ -141,7 +141,7 @@ describe Movie do
     end
   end
 
-  context "released query" do
+  describe "released query" do
     let(:unreleased_movie) { Movie.create movie_attributes(released_on: 3.months.from_now) }
     let(:released_movie1) { Movie.create movie_attributes(released_on: 3.months.ago) }
     let(:released_movie2) { Movie.create movie_attributes(released_on: 2.months.ago) }
@@ -160,7 +160,7 @@ describe Movie do
     end
   end
 
-  context "flops query" do
+  describe "flops query" do
     let(:movie) { Movie.create movie_attributes(total_gross: 60000000) }
     let(:flop_movie1) { Movie.create movie_attributes(total_gross: 40000000) }
     let(:flop_movie2) { Movie.create movie_attributes(total_gross: 30000000) }
@@ -179,7 +179,7 @@ describe Movie do
     end
   end
 
-  context "hits query" do
+  describe "hits query" do
     let(:movie) { Movie.create movie_attributes(total_gross: 200000000) }
     let(:hit_movie1) { Movie.create movie_attributes(total_gross: 300000000) }
     let(:hit_movie2) { Movie.create movie_attributes(total_gross: 400000000) }
@@ -198,7 +198,7 @@ describe Movie do
     end
   end
 
-  context "recently added query" do
+  describe "recently added query" do
     let(:movie1) { Movie.create movie_attributes(created_at: 3.hours.ago) }
     let(:movie2) { Movie.create movie_attributes(created_at: 2.hours.ago) }
     let(:movie3) { Movie.create movie_attributes(created_at: 1.hours.ago) }
