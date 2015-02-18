@@ -6,9 +6,7 @@ describe User do
 
   context "with example attributes" do
     it "is valid" do
-      valid_user = User.new user_attributes
-
-      expect(valid_user.valid?).to be_truthy
+      expect(user.valid?).to be_truthy
     end
   end
 
