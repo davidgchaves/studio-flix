@@ -4,7 +4,7 @@ class Review < ActiveRecord::Base
   belongs_to :movie
 
   validates_presence_of :name
-  validates :comment, length: { minimum: 4 }
+  validates_length_of :comment, minimum: 4
   validates :stars, inclusion: {
     in: STARS,
     message: "must be between 1 and 5" }

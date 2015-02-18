@@ -12,12 +12,10 @@ describe Review do
     end
   end
 
-  it "requires a comment with at least 4 characters" do
-    invalid_review = Review.new comment: "X" * 3
-
-    invalid_review.valid?
-
-    expect(invalid_review.errors[:comment].any?).to eq true
+  describe "comment" do
+    it "contains at least 4 characters" do
+      expect(subject).to validate_length_of(:comment).is_at_least(4)
+    end
   end
 
   it "rejects invalid star values with a custom error message" do
