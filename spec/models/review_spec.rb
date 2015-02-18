@@ -18,25 +18,11 @@ describe Review do
     end
   end
 
-  it "rejects invalid star values with a custom error message" do
-    invalid_stars = [0, -1, 6, 10]
-    invalid_stars.each do |invalid_star|
-      invalid_review = Review.new stars: invalid_star
-
-      invalid_review.valid?
-
-      expect(invalid_review.errors[:stars].first).to eq "must be between 1 and 5"
-    end
-  end
-
-  it "accepts star values of 1 to 5" do
-    valid_stars = [1,2,3,4,5]
-    valid_stars.each do |valid_star|
-      valid_review = Review.new review_attributes(stars: valid_star)
-
-      valid_review.valid?
-
-      expect(valid_review.errors[:stars].any?).to eq false
+  describe "stars rating" do
+    it "is valid when values are in the range of 1 to 5" do
+        expect(subject).to validate_inclusion_of(:stars).
+          in_range(1..5).
+          with_message("must be between 1 and 5")
     end
   end
 
