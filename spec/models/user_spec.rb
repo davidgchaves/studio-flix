@@ -47,12 +47,8 @@ describe User do
   end
 
   describe "password" do
-    it "can't be blank" do
-      invalid_user = User.new password: ""
-
-      invalid_user.valid?
-
-      expect(invalid_user.errors[:password].any?).to be_truthy
+    it "is secure" do
+      expect(subject).to have_secure_password
     end
 
     it "contains at least 10 characters" do
@@ -61,22 +57,6 @@ describe User do
       invalid_user.valid?
 
       expect(invalid_user.errors[:password].any?).to be_truthy
-    end
-
-    context "when present" do
-      it "has to match the password confirmation" do
-        invalid_user = User.new password: "secret-santa", password_confirmation: "nomatch"
-
-        invalid_user.valid?
-
-        expect(invalid_user.errors[:password_confirmation].any?).to be_truthy
-      end
-
-      it "is automatically encrypted into the password_digest attribute" do
-         user = User.new password: "secret-santa"
-
-         expect(user.password_digest.present?).to be_truthy
-      end
     end
   end
 end
