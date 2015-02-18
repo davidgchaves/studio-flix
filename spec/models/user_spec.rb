@@ -18,11 +18,7 @@ describe User do
 
   describe "email" do
     it "can't be blank" do
-      invalid_user = User.new email: ""
-
-      invalid_user.valid?
-
-      expect(invalid_user.errors[:email].any?).to be_truthy
+      expect(subject).to validate_presence_of :email
     end
 
     it "has to be unique and case insensitive" do
