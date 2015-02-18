@@ -21,7 +21,7 @@ class Movie < ActiveRecord::Base
   end
 
   def cult_classic?
-    reviews.size > 50 && average_stars >= 4
+    more_than_50_reviews? && average_stars >= 4
   end
 
   def average_stars
@@ -31,4 +31,9 @@ class Movie < ActiveRecord::Base
   def recent_reviews
     reviews.order(created_at: :desc).limit 2
   end
+
+  private
+    def more_than_50_reviews?
+      reviews.size > 50
+    end
 end

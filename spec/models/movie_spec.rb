@@ -76,6 +76,34 @@ describe Movie do
     end
   end
 
+  context "with more than 50 reviews" do
+    before(:example) { expect(movie).to receive(:more_than_50_reviews?).and_return(true).once }
+
+    context "and an average of at least 4 stars" do
+      before(:example) { expect(movie).to receive(:average_stars).and_return(4).once }
+
+      it "is a cult classic" do
+        expect(movie).to be_a_cult_classic
+      end
+    end
+
+    context "and an average lower than 4 stars" do
+      before(:example) { expect(movie).to receive(:average_stars).and_return(3).once }
+
+      it "can't be a cult classic" do
+        expect(movie).not_to be_a_cult_classic
+      end
+    end
+  end
+
+  context "with 50 or less reviews" do
+    before(:example) { expect(movie).to receive(:more_than_50_reviews?).and_return(false).once }
+
+    it "can't be a cult classic" do
+      expect(movie).not_to be_a_cult_classic
+    end
+  end
+
   context "Being a flop" do
     it "is a flop if the total gross is less than $50M" do
       flop_movie = Movie.new total_gross: 40000000.00
@@ -100,29 +128,6 @@ describe Movie do
       allow(cult_movie).to receive(:cult_classic?) { true }
 
       expect(cult_movie.flop?).to eq false
-    end
-  end
-
-  context "Being a cult classic" do
-    it "is a cult classic when it has more than 50 reviews and its average review is at least 4 stars" do
-      movie = Movie.create movie_attributes
-      51.times { movie.reviews.create review_attributes(stars: 4) }
-
-      expect(movie).to be_a_cult_classic
-    end
-
-    it "is not a cult classic when it has less than 50 reviews" do
-      movie = Movie.create movie_attributes
-      3.times { movie.reviews.create review_attributes(stars: 5) }
-
-      expect(movie).not_to be_a_cult_classic
-    end
-
-    it "is not a cult classic when its average review is lower than 4 stars" do
-      movie = Movie.create movie_attributes
-      51.times { movie.reviews.create review_attributes(stars: 3) }
-
-      expect(movie).not_to be_a_cult_classic
     end
   end
 
