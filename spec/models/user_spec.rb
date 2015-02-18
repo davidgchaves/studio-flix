@@ -2,6 +2,8 @@ require 'rails_helper'
 require 'support/attributes'
 
 describe User do
+  let(:user) { User.new user_attributes }
+
   context "with example attributes" do
     it "is valid" do
       valid_user = User.new user_attributes
