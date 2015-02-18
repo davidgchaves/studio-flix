@@ -3,7 +3,7 @@ class Review < ActiveRecord::Base
 
   belongs_to :movie
 
-  validates :name, presence: true
+  validates_presence_of :name
   validates :comment, length: { minimum: 4 }
   validates :stars, inclusion: {
     in: STARS,

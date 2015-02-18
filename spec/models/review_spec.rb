@@ -6,12 +6,10 @@ describe Review do
     expect(subject).to belong_to :movie
   end
 
-  it "requires a name" do
-    invalid_review = Review.new name: ""
-
-    invalid_review.valid?
-
-    expect(invalid_review.errors[:name].any?).to eq true
+  describe "name" do
+    it "can't be blank" do
+      expect(subject).to validate_presence_of :name
+    end
   end
 
   it "requires a comment with at least 4 characters" do
