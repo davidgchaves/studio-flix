@@ -37,14 +37,15 @@ describe Review do
     end
   end
 
-  it "accepts well formatted locations" do
-    valid_locations = ["Boston, MA", "Austin, TX", "Portland, OR"]
-    valid_locations.each do |valid_location|
-      valid_review = Review.new review_attributes(location: valid_location)
+  describe "location" do
+    context "when properly formatted" do
+      let(:valid_locations) { ["Boston, MA", "Austin, TX", "Portland, OR"] }
 
-      valid_review.valid?
-
-      expect(valid_review.errors[:location].any?).to eq false
+      it "is valid" do
+        valid_locations.each do |valid_location|
+          expect(subject).to allow_value(valid_location).for :location
+        end
+      end
     end
   end
 
