@@ -52,11 +52,7 @@ describe User do
     end
 
     it "contains at least 10 characters" do
-      invalid_user = User.new password: "X" * 9
-
-      invalid_user.valid?
-
-      expect(invalid_user.errors[:password].any?).to be_truthy
+      expect(subject).to validate_length_of(:password).is_at_least(10)
     end
   end
 end
