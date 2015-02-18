@@ -2,6 +2,14 @@ require 'rails_helper'
 require 'support/attributes'
 
 describe Review do
+  let(:review) { Review.new review_attributes }
+
+  context "with example attributes" do
+    it "is valid" do
+      expect(review).to be_valid
+    end
+  end
+
   it "belongs to a movie" do
     expect(subject).to belong_to :movie
   end
@@ -46,12 +54,6 @@ describe Review do
         end
       end
     end
-  end
-
-  it "is valid with example attributes" do
-    review = Review.new review_attributes
-
-    expect(review.valid?).to eq true
   end
 end
 
