@@ -35,14 +35,13 @@ describe User do
       end
     end
 
-    it "rejects improperly formatted emails" do
-      invalid_emails = ["@", "moe stoo@stoogies.com", "moe.stoo@sto ogies.com"]
-      invalid_emails.each do |invalid_email|
-        invalid_user = User.new email: invalid_email
+    context "when improperly formatted" do
+      let(:invalid_emails) { ["@", "moe stoo@stoogies.com", "moe.stoo@sto ogies.com"] }
 
-        invalid_user.valid?
-
-        expect(invalid_user.errors[:email].any?).to be_truthy
+      it "is invalid" do
+        invalid_emails.each do |invalid_email|
+          expect(subject).not_to allow_value(invalid_email).for :email
+        end
       end
     end
   end
