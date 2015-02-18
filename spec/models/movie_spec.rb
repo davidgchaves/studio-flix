@@ -104,6 +104,15 @@ describe Movie do
     end
   end
 
+  context "that is a cult classic" do
+    let(:cult_classic_movie) { Movie.create movie_attributes(total_gross: 0.00) }
+    before(:example) { expect(cult_classic_movie).to receive(:cult_classic?).and_return(true).once }
+
+    it "is never a flop" do
+      expect(cult_classic_movie).not_to be_a_flop
+    end
+  end
+
   context "with a less than $50M total gross" do
     let(:flop_movie) { Movie.new total_gross: 40000000.00 }
 
@@ -125,13 +134,6 @@ describe Movie do
       movie = Movie.new total_gross: 60000000.00
 
       expect(movie.flop?).to eq false
-    end
-
-    it "is never a flop if it's a cult classic, no matter the total gross" do
-      cult_movie = Movie.create movie_attributes(total_gross: 0.00)
-      allow(cult_movie).to receive(:cult_classic?) { true }
-
-      expect(cult_movie.flop?).to eq false
     end
   end
 
