@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/attributes'
 
-describe "A review" do
+describe Review do
   it "belongs to a movie" do
     movie = Movie.create movie_attributes
 
